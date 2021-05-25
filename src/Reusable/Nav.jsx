@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import prolos from '../Assets/prolos.svg'
+import {
+    Link
+  } from "react-router-dom";
 
 const MainNav = styled.div`
     display: grid;
@@ -18,7 +21,7 @@ const Space = styled.div`
     text-align: right;
 `;
 
-const Fields = styled.div`
+const Fields = styled(Link)`
     display: grid;
     grid-column: span 3;
     text-align: right;
@@ -27,16 +30,17 @@ const Fields = styled.div`
     font-weight: 300;
     font-size: 16px;
     line-height: 24px;
+    cursor: pointer;
 `;
 
 export class Nav extends Component {
     render() {
         return (
             <MainNav>
-                <Logo><span><img src={prolos}/></span></Logo>
+                <Logo><span><Link to="/"><img src={prolos}/></Link></span></Logo>
                 <Space />
-                <Fields>Support</Fields>
-                <Fields>Contact</Fields>
+                <Fields to="/support" style={{ textDecoration: 'none', color: '#202020' }}>Support</Fields>
+                <Fields to="/contact" style={{ textDecoration: 'none', color: '#202020' }}>Contact</Fields>
             </MainNav>
         )
     }

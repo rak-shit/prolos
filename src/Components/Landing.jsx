@@ -6,6 +6,9 @@ import hero from '../Assets/hero.svg'
 import upload from '../Assets/upload.svg'
 import table from '../Assets/table.svg'
 import { MainFont, ContentFont } from '../Styles/basic'
+import Modal, { ModalTransition } from '@atlaskit/modal-dialog'
+import Textfield from '@atlaskit/textfield'
+import { Checkbox } from '@atlaskit/checkbox';
 
 const MainDiv = styled.div`
     background-color: #f9fafd;
@@ -222,10 +225,157 @@ const SignUp = styled(ButtonSignup)`
     }
 `;
 
+export const Heading = styled(ContentFont)`
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 20px;
+    /* or 111% */
+    padding-bottom: 10px;
+    color: #202020;
+`;
+
+const Label = styled(ContentFont)`
+    font-style: normal;
+    font-weight: normal;
+    font-size: 13px;
+    line-height: 22px;
+    /* identical to box height, or 169% */
+    display: flex;
+    align-items: center;
+    font-feature-settings: 'tnum' on, 'lnum' on;
+
+    color: #6A6A6A;
+`;
+
+const FormButton = styled.div`
+    background: #5474D2;
+    border-radius: 5px;
+    font-family: Work Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 27px;
+    /* or 169% */
+    text-align: center;
+    padding: 5px;
+    /* White */
+    color: #FFFFFF;
+    margin-top: 2rem;
+`;
+
+const LoginText = styled(ContentFont)`
+    font-style: normal;
+    font-weight: normal;
+    font-size: 13px;
+    line-height: 22px;
+    /* identical to box height, or 169% */
+    text-align: center;
+    font-feature-settings: 'tnum' on, 'lnum' on;
+    margin: 0 auto;
+    color: #6A6A6A;
+    padding-top: 10px;
+`;
+
+const Question = styled.div`
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+`;
+
+const RememberMe = styled.div`
+    display: grid;
+    grid-column: span 7;
+`;
+
+const Forgot = styled.div`
+    display: grid;
+    grid-column: span 5;
+    margin-left: 16px;
+`;
+
 export class Landing extends Component {
+    constructor(props) {
+        super(props)
+    
+        this.state = {
+            signup: false,
+            login: false
+        }
+    }
+
+    openSignup = () => {
+        this.setState({
+            signup: true
+        })
+    }
+
+    openLogin = () => {
+        this.setState({
+            login: true
+        })
+    }
+    
     render() {
         return (
             <>
+                {
+                    this.state.signup ? (
+                        <div>
+                            <ModalTransition>
+                                <Modal width="small" stackIndex={13}>
+                                    <div style={{ padding: '20px' }}>
+                                        <Heading>Sign Up</Heading>
+                                        <div style={{ paddingTop: '20px' }}>
+                                            <Label>Name</Label>
+                                            <Textfield placeholder={`Enter Name`} />
+                                        </div>
+                                        <div style={{ paddingTop: '20px' }}>
+                                            <Label>Email</Label>
+                                            <Textfield placeholder={`Email`} />
+                                        </div>
+                                        <div style={{ paddingTop: '20px' }}>
+                                            <Label>Password</Label>
+                                            <Textfield placeholder={`Password`} />
+                                        </div>
+                                        <div style={{ width: '100%' }}>
+                                            <FormButton>Sign Up</FormButton>
+                                        </div>
+                                        <LoginText>Already have an account? <span style={{ color: '#5474d2', cursor: 'pointer' }}>Login</span></LoginText>
+                                    </div>
+                                </Modal>
+                            </ModalTransition>
+                        </div>
+                    ) : null
+                }
+                {
+                    this.state.login ? (
+                        <div>
+                            <ModalTransition>
+                                <Modal width="small" stackIndex={13}>
+                                    <div style={{ padding: '20px' }}>
+                                        <Heading>Login</Heading>
+                                        <div style={{ paddingTop: '20px' }}>
+                                            <Label>Email</Label>
+                                            <Textfield placeholder={`Email`} />
+                                        </div>
+                                        <div style={{ paddingTop: '20px' }}>
+                                            <Label>Password</Label>
+                                            <Textfield placeholder={`Password`} />
+                                        </div>
+                                        <Question style={{ paddingTop: '10px' }}>
+                                            <RememberMe><Checkbox label={<Label>Remember Me</Label>} /></RememberMe>
+                                            <Forgot><Label>Forgot Password?</Label></Forgot>
+                                        </Question>
+                                        <div style={{ width: '100%' }}>
+                                            <FormButton style={{ marginTop: '1rem' }}>Login</FormButton>
+                                        </div>
+                                        <LoginText>Don't have an account? <span style={{ color: '#5474d2', cursor: 'pointer' }}>Signup</span></LoginText>
+                                    </div>
+                                </Modal>
+                            </ModalTransition>
+                        </div>
+                    ) : null
+                }
                 <MainDiv>
                     <Nav />
                     <Grid>
@@ -233,8 +383,8 @@ export class Landing extends Component {
                             <Title>Now know your <br /><span style={{ color: '#5474d2' }}>Crypto profits & losses in seconds.</span></Title>
                             <SubTitle>Upload your Trade Reports and see a summary of your profits and losses for each coin.</SubTitle>
                             <span style={{ marginTop: '-3rem' }}>
-                                <ButtonLogin>Login</ButtonLogin>
-                                <ButtonSignup>Sign Up</ButtonSignup>
+                                <ButtonLogin style={{ cursor: 'pointer' }} onClick={this.openLogin}>Login</ButtonLogin>
+                                <ButtonSignup style={{ cursor: 'pointer' }} onClick={this.openSignup}>Sign Up</ButtonSignup>
                             </span>
                         </GridLeft>
                         <GridRight>

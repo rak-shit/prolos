@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@atlaskit/checkbox": "^12.1.1",
+    "@atlaskit/modal-dialog": "^11.5.0",
+    "@atlaskit/textfield": "^5.0.1",
     "@testing-library/jest-dom": "^5.12.0",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
