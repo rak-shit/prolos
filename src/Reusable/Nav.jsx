@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import prolos from '../Assets/prolos.svg'
 import {
     Link
-  } from "react-router-dom";
+  } from "react-router-dom"
 
 const MainNav = styled.div`
     display: grid;

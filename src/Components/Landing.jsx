@@ -9,6 +9,9 @@ import { MainFont, ContentFont } from '../Styles/basic'
 import Modal, { ModalTransition } from '@atlaskit/modal-dialog'
 import Textfield from '@atlaskit/textfield'
 import { Checkbox } from '@atlaskit/checkbox';
+import {
+    Link
+  } from "react-router-dom"
 
 const MainDiv = styled.div`
     background-color: #f9fafd;
@@ -16,10 +19,10 @@ const MainDiv = styled.div`
     padding-bottom: 5rem;
     min-height: calc(100vh - 100px);
     @media (min-width: 1500px) {
-        padding: 2rem 20rem;
+        padding: 2rem 12rem;
     }
     @media (min-width: 1700px) {
-        padding: 2rem 25rem;
+        padding: 2rem 12rem;
     }
 `;
 
@@ -38,6 +41,12 @@ const GridRight = styled.div`
     display: grid;
     grid-column: span 12;
     margin-top: -6rem;
+    @media (min-width: 1500px) {
+        margin-left: 6rem;
+    }
+    @media (min-width: 1700px) {
+        margin-left: 10rem;
+    }
 `;
 
 const Title = styled.div`  
@@ -367,7 +376,7 @@ export class Landing extends Component {
                                             <Forgot><Label>Forgot Password?</Label></Forgot>
                                         </Question>
                                         <div style={{ width: '100%' }}>
-                                            <FormButton style={{ marginTop: '1rem' }}>Login</FormButton>
+                                            <Link to="/dashboard" style={{ textDecoration: 'none' }}><FormButton style={{ marginTop: '1rem', color: '#ffffff' }}>Login</FormButton></Link>
                                         </div>
                                         <LoginText>Don't have an account? <span style={{ color: '#5474d2', cursor: 'pointer' }}>Signup</span></LoginText>
                                     </div>

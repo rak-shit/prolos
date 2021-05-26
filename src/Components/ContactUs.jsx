@@ -11,10 +11,10 @@ const MainDiv = styled.div`
     padding-bottom: 5rem;
     min-height: calc(100vh - 100px);
     @media (min-width: 1500px) {
-        padding: 2rem 20rem;
+        padding: 2rem 15rem;
     }
     @media (min-width: 1700px) {
-        padding: 2rem 25rem;
+        padding: 2rem 15rem;
     }
 `;
 
@@ -33,6 +33,12 @@ const GridRight = styled.div`
     display: grid;
     grid-column: span 12;
     margin-top: 4rem;
+    @media (min-width: 1500px) {
+        margin-left: 6rem;
+    }
+    @media (min-width: 1700px) {
+        margin-left: 10rem;
+    }
 `;
 
 const Title = styled.div`  

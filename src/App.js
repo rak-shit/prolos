@@ -1,6 +1,7 @@
 import Landing from './Components/Landing'
 import ContactUs from './Components/ContactUs'
 import Support from './Components/Support'
+import Dashboard from './Components/Dashboard'
 import {
   BrowserRouter as Router,
   Switch,
@@ -11,6 +12,9 @@ function App() {
   return (
     <Router>
       <Switch>
+        <Route path="/dashboard">
+          <Dashboard />
+        </Route>
         <Route path="/contact">
           <ContactUs />
         </Route>
