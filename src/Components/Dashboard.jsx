@@ -7,6 +7,7 @@ import plus from '../Assets/plus.svg'
 import cross from '../Assets/cross.svg'
 import xlxs from '../Assets/xlxs.svg'
 import refresh from '../Assets/refresh.svg'
+import profit from '../Assets/profit.svg'
 import Modal, { ModalTransition } from '@atlaskit/modal-dialog'
 
 const MainDiv = styled.div`
@@ -207,6 +208,53 @@ const StatContent = styled(ContentFont)`
     color: #202020;
 `;
 
+const Table = styled.div`
+    display: grid;
+    grid-template-columns: repeat(25, 1fr);
+    background: #FFFFFF;
+    box-shadow: 0px 2px 12px rgba(84, 116, 210, 0.1);
+    border-radius: 5px;
+    margin-top: 2rem;
+`;
+
+const TableHeading = styled.div`
+    display: grid;
+    grid-column: span 3;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 15px;
+    line-height: 20px;
+    /* identical to box height, or 133% */
+    color: #5474D2;
+    /* Inside Auto Layout */
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    text-align: center;
+    margin: 0px 0px;
+    padding: 15px;
+    border-bottom: 1px solid #efefef;
+`
+
+const Empty = styled(ContentFont)`
+    display: grid;
+    grid-column:  span 1;
+    border-bottom: 1px solid #efefef;
+`;
+
+const Values = styled(ContentFont)`
+    display: grid;
+    grid-column: span 3;
+    padding: 15px;
+    border-bottom: 1px solid #efefef;
+`;
+
+const PL = styled.div`
+    display: grid;
+    grid-column: span 1;
+    border-bottom: 1px solid #efefef;
+`;
+
 class Dashboard extends Component {
     constructor(props) {
         super(props)
@@ -357,6 +405,152 @@ class Dashboard extends Component {
                                         </StatContent>
                                     </StatItem>
                                 </Stats>
+                                <Table>
+                                    <TableHeading style={{ gridColumn: 'span 2' }}>Coin</TableHeading>
+                                    <TableHeading>Quantity</TableHeading>
+                                    <TableHeading>Buy Avg.</TableHeading>
+                                    <TableHeading>Curr. Price</TableHeading>
+                                    <TableHeading>Unreal. PF</TableHeading>
+                                    <TableHeading style={{ gridColumn: 'span 4' }}>Invested Amount</TableHeading>
+                                    <TableHeading>Coin PVal.</TableHeading>
+                                    <TableHeading>Percent</TableHeading>
+                                    <Empty />
+                                    <Values style={{ gridColumn: 'span 2' }}>
+                                        BTC(INR)
+                                    </Values>
+                                    <Values style={{ textAlign: 'center', borderRight: '1px solid #efefef' }}>
+                                        1
+                                    </Values>
+                                    <Values style={{ textAlign: 'center' }}>
+                                        45,00,000
+                                    </Values>
+                                    <Values style={{ textAlign: 'center', borderRight: '1px solid #efefef' }}>
+                                        45,00,000
+                                    </Values>
+                                    <Values style={{ textAlign: 'center' }}>
+                                        +10,000
+                                    </Values>
+                                    <Values style={{ textAlign: 'center', borderRight: '1px solid #efefef', gridColumn: 'span 4' }}>
+                                        5,000
+                                    </Values>
+                                    <Values style={{ textAlign: 'center' }}>
+                                        5,000
+                                    </Values>
+                                    <Values style={{ textAlign: 'center' }}>
+                                        134%
+                                    </Values>
+                                    <PL style={{ textAlign: 'center' }}>
+                                        <img src={profit} style={{ marginTop: '20px' }} />
+                                    </PL>
+                                    <Values style={{ gridColumn: 'span 2' }}>
+                                        BTC(INR)
+                                    </Values>
+                                    <Values style={{ textAlign: 'center', borderRight: '1px solid #efefef' }}>
+                                        1
+                                    </Values>
+                                    <Values style={{ textAlign: 'center' }}>
+                                        45,00,000
+                                    </Values>
+                                    <Values style={{ textAlign: 'center', borderRight: '1px solid #efefef' }}>
+                                        45,00,000
+                                    </Values>
+                                    <Values style={{ textAlign: 'center' }}>
+                                        +10,000
+                                    </Values>
+                                    <Values style={{ textAlign: 'center', borderRight: '1px solid #efefef', gridColumn: 'span 4' }}>
+                                        5,000
+                                    </Values>
+                                    <Values style={{ textAlign: 'center' }}>
+                                        5,000
+                                    </Values>
+                                    <Values style={{ textAlign: 'center' }}>
+                                        134%
+                                    </Values>
+                                    <PL style={{ textAlign: 'center' }}>
+                                        <img src={profit} style={{ marginTop: '20px' }} />
+                                    </PL>
+                                    <Values style={{ gridColumn: 'span 2' }}>
+                                        BTC(INR)
+                                    </Values>
+                                    <Values style={{ textAlign: 'center', borderRight: '1px solid #efefef' }}>
+                                        1
+                                    </Values>
+                                    <Values style={{ textAlign: 'center' }}>
+                                        45,00,000
+                                    </Values>
+                                    <Values style={{ textAlign: 'center', borderRight: '1px solid #efefef' }}>
+                                        45,00,000
+                                    </Values>
+                                    <Values style={{ textAlign: 'center' }}>
+                                        +10,000
+                                    </Values>
+                                    <Values style={{ textAlign: 'center', borderRight: '1px solid #efefef', gridColumn: 'span 4' }}>
+                                        5,000
+                                    </Values>
+                                    <Values style={{ textAlign: 'center' }}>
+                                        5,000
+                                    </Values>
+                                    <Values style={{ textAlign: 'center' }}>
+                                        134%
+                                    </Values>
+                                    <PL style={{ textAlign: 'center' }}>
+                                        <img src={profit} style={{ marginTop: '20px' }} />
+                                    </PL>
+                                    <Values style={{ gridColumn: 'span 2' }}>
+                                        BTC(INR)
+                                    </Values>
+                                    <Values style={{ textAlign: 'center', borderRight: '1px solid #efefef' }}>
+                                        1
+                                    </Values>
+                                    <Values style={{ textAlign: 'center' }}>
+                                        45,00,000
+                                    </Values>
+                                    <Values style={{ textAlign: 'center', borderRight: '1px solid #efefef' }}>
+                                        45,00,000
+                                    </Values>
+                                    <Values style={{ textAlign: 'center' }}>
+                                        +10,000
+                                    </Values>
+                                    <Values style={{ textAlign: 'center', borderRight: '1px solid #efefef', gridColumn: 'span 4' }}>
+                                        5,000
+                                    </Values>
+                                    <Values style={{ textAlign: 'center' }}>
+                                        5,000
+                                    </Values>
+                                    <Values style={{ textAlign: 'center' }}>
+                                        134%
+                                    </Values>
+                                    <PL style={{ textAlign: 'center' }}>
+                                        <img src={profit} style={{ marginTop: '20px' }} />
+                                    </PL>
+                                    <Values style={{ gridColumn: 'span 2' }}>
+                                        BTC(INR)
+                                    </Values>
+                                    <Values style={{ textAlign: 'center', borderRight: '1px solid #efefef' }}>
+                                        1
+                                    </Values>
+                                    <Values style={{ textAlign: 'center' }}>
+                                        45,00,000
+                                    </Values>
+                                    <Values style={{ textAlign: 'center', borderRight: '1px solid #efefef' }}>
+                                        45,00,000
+                                    </Values>
+                                    <Values style={{ textAlign: 'center' }}>
+                                        +10,000
+                                    </Values>
+                                    <Values style={{ textAlign: 'center', borderRight: '1px solid #efefef', gridColumn: 'span 4' }}>
+                                        5,000
+                                    </Values>
+                                    <Values style={{ textAlign: 'center' }}>
+                                        5,000
+                                    </Values>
+                                    <Values style={{ textAlign: 'center' }}>
+                                        134%
+                                    </Values>
+                                    <PL style={{ textAlign: 'center' }}>
+                                        <img src={profit} style={{ marginTop: '20px' }} />
+                                    </PL>
+                                </Table>
                             </div>
                         )
                     }
