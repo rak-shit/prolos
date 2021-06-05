@@ -4,6 +4,9 @@ import Nav from '../Reusable/Nav'
 import Textfield from '@atlaskit/textfield'
 import contact from '../Assets/contact.svg'
 import { ContentFont } from '../Styles/basic'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
+import { LoginNav } from '../Reusable/LoginNav'
 
 const MainDiv = styled.div`
     background-color: #f9fafd;
@@ -105,7 +108,11 @@ class ContactUs extends Component {
         return (
             <>
                 <MainDiv>
-                    <Nav />
+                    {
+                        this.props.auth.isAuthenticated === true ? (
+                            <LoginNav isAuthenticated={this.props.auth.isAuthenticated} />
+                        ) : <Nav />
+                    }
                     <Grid>
                         <GridLeft>
                             <Title>Contact Us</Title>
@@ -144,4 +151,14 @@ class ContactUs extends Component {
     }
 }
 
-export default ContactUs
+ContactUs.propTypes = {
+    auth: PropTypes.object.isRequired
+}
+
+function mapStateToProps(state) {
+    return {
+      auth: state.credentials
+    };
+}
+
+export default connect(mapStateToProps, null)(ContactUs)

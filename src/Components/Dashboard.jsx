@@ -9,6 +9,9 @@ import xlxs from '../Assets/xlxs.svg'
 import refresh from '../Assets/refresh.svg'
 import profit from '../Assets/profit.svg'
 import Modal, { ModalTransition } from '@atlaskit/modal-dialog'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
+import '../Styles/tooltip.css'
 
 const MainDiv = styled.div`
     background-color: #f9fafd;
@@ -255,6 +258,25 @@ const PL = styled.div`
     border-bottom: 1px solid #efefef;
 `;
 
+const Tooltip = styled.span`
+    font-family: Work Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 13px;
+    line-height: 18px;
+    /* identical to box height, or 138% */
+    display: flex;
+    align-items: center;
+    font-feature-settings: 'tnum' on, 'lnum' on;
+    /* Function/White */
+    color: #FFFFFF;
+    /* Inside Auto Layout */
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    margin: 0px 12px;
+`;
+
 class Dashboard extends Component {
     constructor(props) {
         super(props)
@@ -297,6 +319,10 @@ class Dashboard extends Component {
                 _progressInfos
             })    
         })
+    }
+
+    componentDidMount() {
+        console.log(this.props.auth, 'dash')
     }
     
     render() {
@@ -406,14 +432,70 @@ class Dashboard extends Component {
                                     </StatItem>
                                 </Stats>
                                 <Table>
-                                    <TableHeading style={{ gridColumn: 'span 2' }}>Coin</TableHeading>
-                                    <TableHeading>Quantity</TableHeading>
-                                    <TableHeading>Buy Avg.</TableHeading>
-                                    <TableHeading>Curr. Price</TableHeading>
-                                    <TableHeading>Unreal. PF</TableHeading>
-                                    <TableHeading style={{ gridColumn: 'span 4' }}>Invested Amount</TableHeading>
-                                    <TableHeading>Coin PVal.</TableHeading>
-                                    <TableHeading>Percent</TableHeading>
+                                    <TableHeading className="mytooltip" style={{ gridColumn: 'span 2' }}>
+                                        Coin
+                                        <div className="relative">
+                                            <Tooltip className="mytext" style={{ left: '40px' }}>
+                                                Coin
+                                            </Tooltip>
+                                        </div>
+                                    </TableHeading>
+                                    <TableHeading className="mytooltip">
+                                        Quantity
+                                        <div className="relative">
+                                            <Tooltip className="mytext">
+                                                Quantity
+                                            </Tooltip>
+                                        </div>
+                                    </TableHeading>
+                                    <TableHeading className="mytooltip">
+                                        Buy Avg.
+                                        <div className="relative">
+                                            <Tooltip className="mytext">
+                                                Buying Average
+                                            </Tooltip>
+                                        </div>
+                                    </TableHeading>
+                                    <TableHeading className="mytooltip">
+                                        Curr. Price
+                                        <div className="relative">
+                                            <Tooltip className="mytext">
+                                                Current Price
+                                            </Tooltip>
+                                        </div>
+                                    </TableHeading>
+                                    <TableHeading className="mytooltip">
+                                        Unreal. PF
+                                        <div className="relative">
+                                            <Tooltip className="mytext">
+                                                Unrealised Profit
+                                            </Tooltip>
+                                        </div>
+                                    </TableHeading>
+                                    <TableHeading style={{ gridColumn: 'span 4' }} className="mytooltip">
+                                        Invested Amount
+                                        <div className="relative">
+                                            <Tooltip className="mytext" style={{ left: '130px' }}>
+                                                Invested Amount
+                                            </Tooltip>
+                                        </div>
+                                    </TableHeading>
+                                    <TableHeading className="mytooltip">
+                                        Coin PVal.
+                                        <div className="relative">
+                                            <Tooltip className="mytext" style={{ bottom: '-13px' }}>
+                                                Coin Portfolio Value
+                                            </Tooltip>
+                                        </div>
+                                    </TableHeading>
+                                    <TableHeading className="mytooltip">
+                                        Percent
+                                        <div className="relative">
+                                            <Tooltip className="mytext">
+                                                Percent
+                                            </Tooltip>
+                                        </div>
+                                    </TableHeading>
                                     <Empty />
                                     <Values style={{ gridColumn: 'span 2' }}>
                                         BTC(INR)
@@ -560,4 +642,14 @@ class Dashboard extends Component {
     }
 }
 
-export default Dashboard
+Dashboard.propTypes = {
+    auth: PropTypes.object.isRequired
+}
+
+function mapStateToProps(state) {
+    return {
+      auth: state.credentials
+    };
+  }
+
+export default connect(mapStateToProps, null)(Dashboard)

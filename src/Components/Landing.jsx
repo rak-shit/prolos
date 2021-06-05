@@ -8,7 +8,12 @@ import table from '../Assets/table.svg'
 import { MainFont, ContentFont } from '../Styles/basic'
 import Modal, { ModalTransition } from '@atlaskit/modal-dialog'
 import Textfield from '@atlaskit/textfield'
-import { Checkbox } from '@atlaskit/checkbox';
+import { Checkbox } from '@atlaskit/checkbox'
+import cross from '../Assets/cross.svg'
+import axios from 'axios'
+import { connect } from 'react-redux'
+import { login } from '../actions/setCredentialsAction'
+import PropTypes from 'prop-types'
 import {
     Link
   } from "react-router-dom"
@@ -271,6 +276,7 @@ const FormButton = styled.div`
     /* White */
     color: #FFFFFF;
     margin-top: 2rem;
+    cursor: pointer;
 `;
 
 const LoginText = styled(ContentFont)`
@@ -308,7 +314,11 @@ export class Landing extends Component {
     
         this.state = {
             signup: false,
-            login: false
+            login: false,
+            earlyAccess: false,
+            name: '',
+            email: '',
+            password: ''
         }
     }
 
@@ -323,7 +333,70 @@ export class Landing extends Component {
             login: true
         })
     }
+
+    openEarlyAccess = () => {
+        this.setState({
+            earlyAccess: true
+        })
+    }
+
+    signUp = () => {
+        axios.post('https://prolos.herokuapp.com/signup', {
+            displayName: this.state.name,
+            email: this.state.email,
+            password: this.state.password
+          },
+          {
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
+            }
+          })
+          .then((response) => {
+            console.log(response)
+            this.setState({
+                signup: false
+            })
+          })
+          .catch((error) => {
+              console.log(error)
+          })
+    }
+
+    isValid = () => {
+        if (this.state.email === '' || this.state.password === '') {
+            return false
+        }
+        return true
+    }
+
+    loginAccount = () => {
+        if (this.isValid()) {
+            const data = {
+                email: this.state.email,
+                password: this.state.password
+            }
+            this.props.login(data)
+                .then((res) => {
+                    console.log(this.props, 'result-login')
+                    this.props.history.push('/dashboard')
+                })
+                .catch((err) => console.log(err, 'err'))
+        } else {
+            console.log('error')
+        }
+    }
+
+    handleChange = (event) => {
+        this.setState({
+            [event.target.name]: event.target.value
+        })
+    }
     
+    componentDidMount() {
+        console.log(this.props.auth, 'creds')
+    }
+
     render() {
         return (
             <>
@@ -333,21 +406,21 @@ export class Landing extends Component {
                             <ModalTransition>
                                 <Modal width="small" stackIndex={13}>
                                     <div style={{ padding: '20px' }}>
-                                        <Heading>Sign Up</Heading>
+                                        <Heading>Sign Up<img style={{ float: 'right', cursor: 'pointer' }} onClick={() => this.setState({ signup: false })} src={cross} /></Heading>
                                         <div style={{ paddingTop: '20px' }}>
                                             <Label>Name</Label>
-                                            <Textfield placeholder={`Enter Name`} />
+                                            <Textfield onChange={this.handleChange} name="name" placeholder={`Enter Name`} />
                                         </div>
                                         <div style={{ paddingTop: '20px' }}>
                                             <Label>Email</Label>
-                                            <Textfield placeholder={`Email`} />
+                                            <Textfield onChange={this.handleChange} name="email" placeholder={`Email`} />
                                         </div>
                                         <div style={{ paddingTop: '20px' }}>
                                             <Label>Password</Label>
-                                            <Textfield placeholder={`Password`} />
+                                            <Textfield onChange={this.handleChange} name="password" placeholder={`Password`} />
                                         </div>
                                         <div style={{ width: '100%' }}>
-                                            <FormButton>Sign Up</FormButton>
+                                            <FormButton onClick={this.signUp}>Sign Up</FormButton>
                                         </div>
                                         <LoginText>Already have an account? <span style={{ color: '#5474d2', cursor: 'pointer' }}>Login</span></LoginText>
                                     </div>
@@ -362,23 +435,52 @@ export class Landing extends Component {
                             <ModalTransition>
                                 <Modal width="small" stackIndex={13}>
                                     <div style={{ padding: '20px' }}>
-                                        <Heading>Login</Heading>
+                                        <Heading>Login<img style={{ float: 'right', cursor: 'pointer' }} onClick={() => this.setState({ login: false })} src={cross} /></Heading>
                                         <div style={{ paddingTop: '20px' }}>
                                             <Label>Email</Label>
-                                            <Textfield placeholder={`Email`} />
+                                            <Textfield onChange={this.handleChange} name="email" placeholder={`Email`} />
                                         </div>
                                         <div style={{ paddingTop: '20px' }}>
                                             <Label>Password</Label>
-                                            <Textfield placeholder={`Password`} />
+                                            <Textfield onChange={this.handleChange} name="password" placeholder={`Password`} />
                                         </div>
                                         <Question style={{ paddingTop: '10px' }}>
                                             <RememberMe><Checkbox label={<Label>Remember Me</Label>} /></RememberMe>
                                             <Forgot><Label>Forgot Password?</Label></Forgot>
                                         </Question>
                                         <div style={{ width: '100%' }}>
-                                            <Link to="/dashboard" style={{ textDecoration: 'none' }}><FormButton style={{ marginTop: '1rem', color: '#ffffff' }}>Login</FormButton></Link>
+                                            <FormButton style={{ marginTop: '1rem', color: '#ffffff' }} onClick={this.loginAccount}>Login</FormButton>
                                         </div>
                                         <LoginText>Don't have an account? <span style={{ color: '#5474d2', cursor: 'pointer' }}>Signup</span></LoginText>
+                                    </div>
+                                </Modal>
+                            </ModalTransition>
+                        </div>
+                    ) : null
+                }
+                {
+                    this.state.earlyAccess ? (
+                        <div>
+                            <ModalTransition>
+                                <Modal width="small" stackIndex={13}>
+                                    <div style={{ padding: '20px' }}>
+                                        <Heading>Early Access Program<img style={{ float: 'right', cursor: 'pointer' }} onClick={() => this.setState({ earlyAccess: false })} src={cross} /></Heading>
+                                        <Label>We are currently accepting a limited number of early access customers who are eager to use our product. Early access customers will recieve lifelong discounts from us.</Label>
+                                        <div style={{ paddingTop: '20px' }}>
+                                            <Label>Name <span style={{ color: '#d25474' }}> *</span></Label>
+                                            <Textfield placeholder={`Enter Name`} />
+                                        </div>
+                                        <div style={{ paddingTop: '20px' }}>
+                                            <Label>Email <span style={{ color: '#d25474' }}> *</span></Label>
+                                            <Textfield placeholder={`Enter Email`} />
+                                        </div>
+                                        <div style={{ paddingTop: '20px' }}>
+                                            <Label>Twitter Handle</Label>
+                                            <Textfield placeholder={`Twitter Handle`} />
+                                        </div>                                        
+                                        <div style={{ width: '100%', paddingBottom: '10px' }}>
+                                            <FormButton onClick={() => this.setState({ earlyAccess: false })} style={{ marginTop: '1rem', color: '#ffffff', cursor: 'pointer' }}>Request Early Access</FormButton>
+                                        </div>
                                     </div>
                                 </Modal>
                             </ModalTransition>
@@ -394,6 +496,7 @@ export class Landing extends Component {
                             <span style={{ marginTop: '-3rem' }}>
                                 <ButtonLogin style={{ cursor: 'pointer' }} onClick={this.openLogin}>Login</ButtonLogin>
                                 <ButtonSignup style={{ cursor: 'pointer' }} onClick={this.openSignup}>Sign Up</ButtonSignup>
+                                {/*<ButtonLogin style={{ cursor: 'pointer' }} onClick={this.openEarlyAccess}>Request Early Access</ButtonLogin>*/}
                             </span>
                         </GridLeft>
                         <GridRight>
@@ -481,4 +584,15 @@ export class Landing extends Component {
     }
 }
 
-export default Landing
+Landing.propTypes = {
+    login: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired
+}
+
+function mapStateToProps(state) {
+    return {
+      auth: state.credentials
+    };
+  }
+
+export default connect(mapStateToProps, { login })(Landing)

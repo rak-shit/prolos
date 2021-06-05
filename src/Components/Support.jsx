@@ -8,6 +8,9 @@ import card from '../Assets/card.svg'
 import upi from '../Assets/upi.svg'
 import arrow from '../Assets/arrow.svg'
 import { ContentFont } from '../Styles/basic'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
+import { LoginNav } from '../Reusable/LoginNav'
 
 const MainDiv = styled.div`
     background-color: #f9fafd;
@@ -59,9 +62,9 @@ const DonateCard = styled.div`
     background: #FFFFFF;
     box-shadow: 0px 2px 12px rgba(84, 116, 210, 0.1);
     border-radius: 5px;
-    padding: 20px;
+    padding: 30px 10px;
     width: 80%;
-    max-height: 20px;
+    max-height: 30px;
 `;
 
 const DonateText = styled.p`
@@ -72,23 +75,33 @@ const DonateText = styled.p`
     /* identical to box height, or 111% */
     color: #202020;
     font-family: Work Sans;
-    margin-top: -0.4rem;
+    margin-top: -0.6rem;
 `;
 
 class Support extends Component {
+    componentDidMount() {
+        console.log(this.props.auth.isAuthenticated, 'nav')
+    }
+    componentDidUpdate() {
+        console.log(this.props.auth, 'nav')
+    }
     render() {
         return (
             <>
                 <MainDiv>
-                    <Nav />
+                    {
+                        this.props.auth.isAuthenticated === true ? (
+                            <LoginNav isAuthenticated={this.props.auth.isAuthenticated} />
+                        ) : <Nav />
+                    }
                     <Grid>
                         <GridLeft>
                             <Title>Help us<span style={{ color: '#202020' }}> in providing a better service to you.</span></Title>
                             <DonateCard>
-                                <DonateText>Donate through Binance <img style={{ position: 'relative', top: '8px' }} src={binance} /><img src={arrow} style={{ float: 'right', marginTop: '5px' }} /></DonateText>
+                                <DonateText>Donate through Binance <img style={{ position: 'relative', top: '-1px' }} src={binance} /><img src={arrow} style={{ float: 'right', marginTop: '0px' }} /></DonateText>
                             </DonateCard>
                             <DonateCard>
-                                <DonateText>Donate through Card/UPI <img style={{ position: 'relative', top: '8px' }} src={upi} /><img src={card} style={{ position: 'relative', top: '2px', paddingLeft: '4px' }} /> <img src={arrow} style={{ float: 'right', marginTop: '5px' }} /></DonateText>
+                                <DonateText>Donate through Card/UPI <img style={{ position: 'relative', top: '-1px' }} src={upi} /><img src={card} style={{ position: 'relative', top: '0px', paddingLeft: '4px' }} /> <img src={arrow} style={{ float: 'right', marginTop: '0px' }} /></DonateText>
                             </DonateCard>
                         </GridLeft>
                         <GridRight>
@@ -101,4 +114,14 @@ class Support extends Component {
     }
 }
 
-export default Support
+Support.propTypes = {
+    auth: PropTypes.object.isRequired
+}
+
+function mapStateToProps(state) {
+    return {
+      auth: state.credentials
+    };
+  }
+
+export default connect(mapStateToProps, null)(Support)
